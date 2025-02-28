@@ -1,63 +1,86 @@
-using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
 public class Player : MonoBehaviour
 {
-    private Transform _transform;
-    private Rigidbody2D _rigidbody2D;
-    
-    public float velocidade = 10f;
-    public float forcaPulo = 10f;
+  public float velocidade = 10f;
+  public float focaPulo = 10f;
 
-    private bool noChao = false;
-    
+    public bool noChao = false;
+
+    public bool andando = false;
+
+  private Rigidbody2D _rigidbody2D;
+  private SpriteRenderer  _spriteRenderer;
+  private Animator _animator;
+
+    // Start is called before the first frame update
     void Start()
     {
-        _transform = gameObject.transform;
         _rigidbody2D = gameObject.GetComponent<Rigidbody2D>();
+        _spriteRenderer = gameObject.GetComponent<SpriteRenderer>();
+        _animator = gameObject.GetComponent<Animator>();
     }
 
-    
-    void OnCollisionStay2D(Collision2D other)
+
+   void OnCollisionStay2D(Collision2D collision)
     {
-        if (other.gameObject.CompareTag("chao")) //if (other.tag == "chao")
+        if (collision.gameObject.tag == "chao")
         {
             noChao = true;
         }
     }
 
-    
-    void OnCollisionExit2D(Collision2D other)
+    void OnCollisionExit2D(Collision2D collision)
     {
-        if (other.gameObject.CompareTag("chao")) //if (other.tag == "chao")
+        if (collision.gameObject.tag == "chao")
         {
             noChao = false;
         }
     }
-    
+
+    // Update is called once per frame
     void Update()
     {
+        andando = false;
         
-        Debug.Log("No Chao: " + noChao);
-        
-        if(Input.GetKey(KeyCode.LeftArrow))
-        {
-            _transform.position -= new Vector3(velocidade*Time.deltaTime,0,0);
-           Debug.Log("LeftArrow");
-        }
+      if(Input.GetKey(KeyCode.LeftArrow))
+      {
+        gameObject.transform.position += new Vector3(-velocidade*Time.deltaTime,0,0);
+        //rigidbody2D.AddForce(new Vector2(-velocidade,0));
+        _spriteRenderer.flipX = true;
+        Debug.Log("LeftArrow");
 
-        if(Input.GetKey(KeyCode.RightArrow))
+        if (noChao == true)
         {
-           _transform.position += new Vector3(velocidade*Time.deltaTime,0,0);
-           Debug.Log("RightArrow");
+            andando = true;
         }
+      }
+        
+
+      if(Input.GetKey(KeyCode.RightArrow))
+      {
+        gameObject.transform.position += new Vector3(velocidade*Time.deltaTime,0,0);
+        //rigidbody2D.AddForce(new Vector2(velocidade,0));
+         _spriteRenderer.flipX = false;
+         Debug.Log("RightArrow");
+         
+         if (noChao == true)
+         {
+             andando = true;
+         }
+      }
 
         if (Input.GetKeyDown(KeyCode.Space) && noChao == true)
         {
-           // forcaPulo
-           _rigidbody2D.AddForce(new Vector2(0,forcaPulo),ForceMode2D.Impulse);
+            _rigidbody2D.AddForce(new Vector2(0, 1) * focaPulo,ForceMode2D.Impulse);
+
+            Debug.Log("Jump");
         }
+
+        _animator.SetBool("Andando",andando);
+        
+     
     }
 }
