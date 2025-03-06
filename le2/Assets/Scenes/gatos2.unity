@@ -839,6 +839,7 @@ GameObject:
   - component: {fileID: 262300838}
   - component: {fileID: 262300837}
   - component: {fileID: 262300841}
+  - component: {fileID: 262300842}
   m_Layer: 0
   m_Name: Capsule
   m_TagString: Player
@@ -993,6 +994,27 @@ MonoBehaviour:
   focaPulo: 10
   noChao: 0
   andando: 0
+--- !u!95 &262300842
+Animator:
+  serializedVersion: 5
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 262300836}
+  m_Enabled: 1
+  m_Avatar: {fileID: 0}
+  m_Controller: {fileID: 9100000, guid: 3e194ac46f9dfed41b8efa6801b706d3, type: 2}
+  m_CullingMode: 0
+  m_UpdateMode: 0
+  m_ApplyRootMotion: 0
+  m_LinearVelocityBlending: 0
+  m_StabilizeFeet: 0
+  m_WarningMessage: 
+  m_HasTransformHierarchy: 1
+  m_AllowConstantClipSamplingOptimization: 1
+  m_KeepAnimatorStateOnDisable: 0
+  m_WriteDefaultValuesOnDisable: 0
 --- !u!1 &386588758
 GameObject:
   m_ObjectHideFlags: 0
